@@ -52,7 +52,7 @@ services:
       - "8090:80"
       - "8444:443"
     environment:
-      DOMAIN: ${DOMAIN:-192.168.220.33}
+      DOMAIN: ${DOMAIN}
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
