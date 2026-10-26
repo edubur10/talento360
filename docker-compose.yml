@@ -1,4 +1,4 @@
-# ═══ Talento 360° Salud — despliegue en Portainer (Sin Caddy temporalmente) ═══
+# ═══ Talento 360° Salud — despliegue en Portainer (Puerto 8081) ═══
 services:
   db:
     image: postgres:16-alpine
@@ -32,9 +32,11 @@ services:
   app:
     build: { context: ., target: runner }
     restart: unless-stopped
+    ports:
+      - "8081:3000"
     environment:
       DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
-      APP_URL: ${APP_URL:-http://192.168.220.33:8090}
+      APP_URL: ${APP_URL:-http://192.168.220.33:8081}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
