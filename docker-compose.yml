@@ -17,6 +17,7 @@ services:
 
   migrate:
     build: { context: ., target: tools }
+    command: ["npm", "run", "seed"] # <--- Forzamos la ejecución directa del script de seed
     environment:
       DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
       SEED_MODE: "produccion"
