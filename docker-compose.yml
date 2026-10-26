@@ -1,9 +1,4 @@
-# ═══ Talento 360° Salud — despliegue en un servidor (VPS) ═══
-# Servicios: base de datos, migraciones, aplicación, proxy HTTPS (Caddy) y respaldos diarios.
-# Uso:  cp .env.example .env  →  editar .env  →  docker compose up -d --build
-# Ver docs/01-MANUAL-TECNICO.md
-
-# ═══ Talento 360° Salud — despliegue en Portainer ═══
+# ═══ Talento 360° Salud — despliegue en Portainer (Sin Caddy temporalmente) ═══
 services:
   db:
     image: postgres:16-alpine
@@ -45,20 +40,6 @@ services:
     depends_on:
       migrate: { condition: service_completed_successfully }
 
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "8090:80"
-      - "8444:443"
-    environment:
-      DOMAIN: ${DOMAIN}
-    volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on: [app]
-
   backup:
     image: postgres:16-alpine
     restart: unless-stopped
@@ -77,5 +58,3 @@ services:
 
 volumes:
   pgdata:
-  caddy_data:
-  caddy_config:
