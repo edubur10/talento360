@@ -19,12 +19,14 @@ services:
     build: { context: ., target: tools }
     environment:
       DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
-      SEED_MODE: ${SEED_MODE:-produccion}
-      SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-ESE Hospital Pío XII}
-      SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-pio-xii}
-      SEED_INSTITUTION_CITY: ${SEED_INSTITUTION_CITY:-Colón, Putumayo}
-      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@su-dominio.gov.co}
-      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-PasswordTemporal123*}
+      SEED_MODE: "produccion"
+      SEED_INSTITUTION_NAME: "ESE Hospital Pío XII"
+      SEED_HOSTNAME: "ESE Hospital Pío XII"
+      SEED_INSTITUTION_SLUG: "pio-xii"
+      SEED_INSTITUTION_CITY: "Colón, Putumayo"
+      SEED_ADMIN_EMAIL: "admin@hospital.gov.co"
+      SEED_ADMIN_PASSWORD: "PasswordTemporal123*"
+      DEFAULT_INSTITUTION_SLUG: "pio-xii"
     depends_on:
       db: { condition: service_healthy }
     restart: "no"
