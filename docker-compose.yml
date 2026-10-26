@@ -1,0 +1,81 @@
+# ═══ Talento 360° Salud — despliegue en un servidor (VPS) ═══
+# Servicios: base de datos, migraciones, aplicación, proxy HTTPS (Caddy) y respaldos diarios.
+# Uso:  cp .env.example .env  →  editar .env  →  docker compose up -d --build
+# Ver docs/01-MANUAL-TECNICO.md
+
+# ═══ Talento 360° Salud — despliegue en Portainer ═══
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: t360
+      POSTGRES_USER: t360
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U t360 -d t360"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build: { context: ., target: tools }
+    environment:
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
+      SEED_MODE: ${SEED_MODE:-produccion}
+      SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
+      SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-}
+      SEED_INSTITUTION_CITY: ${SEED_INSTITUTION_CITY:-}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+    depends_on:
+      db: { condition: service_healthy }
+    restart: "no"
+
+  app:
+    build: { context: ., target: runner }
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
+      APP_URL: ${APP_URL:-http://192.168.220.33:8090}
+      DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
+      SESSION_HOURS: ${SESSION_HOURS:-10}
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "8090:80"
+      - "8444:443"
+    environment:
+      DOMAIN: ${DOMAIN:-192.168.220.33}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
+
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      PGHOST: db
+      PGUSER: t360
+      PGPASSWORD: ${POSTGRES_PASSWORD:-admin}
+      PGDATABASE: t360
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-30}
+    volumes:
+      - ./backups:/backups
+      - ./deploy/backup-loop.sh:/backup-loop.sh:ro
+    entrypoint: ["/bin/sh", "/backup-loop.sh"]
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

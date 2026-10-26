@@ -1,0 +1,109 @@
+@import "@fontsource/atkinson-hyperlegible/400.css";
+@import "@fontsource/atkinson-hyperlegible/700.css";
+@import "@fontsource/atkinson-hyperlegible/400-italic.css";
+@import "@fontsource-variable/bricolage-grotesque/index.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: 30 91 79;
+  --brand-dark: 20 59 51;
+  --brand-soft: 230 239 236;
+  --sun: 242 179 61;
+  --sun-dark: 169 125 43;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-ink;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  :focus-visible {
+    outline: 3px solid rgb(var(--sun));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: rgb(var(--sun) / 0.35);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2 font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white hover:bg-brand-dark;
+  }
+  .btn-sun {
+    @apply btn bg-sun text-ink hover:brightness-95;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white text-ink hover:border-brand hover:text-brand;
+  }
+  .btn-danger {
+    @apply btn border border-risk/30 bg-white text-risk hover:bg-risk-soft;
+  }
+  .input {
+    @apply block w-full rounded-xl border border-line bg-white px-3 py-2.5 text-base text-ink placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+  .label {
+    @apply mb-1 block text-sm font-bold text-ink;
+  }
+  .hint {
+    @apply mt-1 text-sm text-ink-muted;
+  }
+  .panel {
+    @apply rounded-2xl border border-line bg-white;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold;
+  }
+  .link {
+    @apply font-bold text-brand underline decoration-brand/30 underline-offset-4 hover:decoration-brand;
+  }
+}
+
+/* Patrón de curvas de nivel: evoca el piedemonte andino-amazónico del Putumayo. */
+.contours {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Cg fill='none' stroke='white' stroke-opacity='0.09' stroke-width='1.2'%3E%3Cpath d='M0 220 C120 170 200 250 320 200 S520 120 600 170'/%3E%3Cpath d='M0 190 C130 140 210 220 330 170 S520 90 600 140'/%3E%3Cpath d='M0 160 C140 110 220 190 340 140 S520 60 600 110'/%3E%3Cpath d='M0 130 C150 80 230 160 350 110 S520 30 600 80'/%3E%3Cpath d='M0 250 C110 200 190 280 310 230 S520 150 600 200'/%3E%3Cpath d='M0 280 C100 230 180 300 300 260 S520 180 600 230'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 900px auto;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}

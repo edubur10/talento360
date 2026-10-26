@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env
+.env.local
+*.log
+/backups
+/test-results
+/tests/e2e/capturas
+next-env.d.ts
+tsconfig.tsbuildinfo

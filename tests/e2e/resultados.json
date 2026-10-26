@@ -1,0 +1,624 @@
+{
+  "fecha": "2026-10-08T20:07:05.282Z",
+  "base": "http://localhost:3100",
+  "resumen": [
+    {
+      "prueba": 1,
+      "verificaciones": 5,
+      "aprobadas": 5,
+      "ok": true
+    },
+    {
+      "prueba": 2,
+      "verificaciones": 3,
+      "aprobadas": 3,
+      "ok": true
+    },
+    {
+      "prueba": 3,
+      "verificaciones": 3,
+      "aprobadas": 3,
+      "ok": true
+    },
+    {
+      "prueba": 4,
+      "verificaciones": 2,
+      "aprobadas": 2,
+      "ok": true
+    },
+    {
+      "prueba": 5,
+      "verificaciones": 7,
+      "aprobadas": 7,
+      "ok": true
+    },
+    {
+      "prueba": 6,
+      "verificaciones": 4,
+      "aprobadas": 4,
+      "ok": true
+    },
+    {
+      "prueba": 7,
+      "verificaciones": 8,
+      "aprobadas": 8,
+      "ok": true
+    },
+    {
+      "prueba": 8,
+      "verificaciones": 4,
+      "aprobadas": 4,
+      "ok": true
+    },
+    {
+      "prueba": 9,
+      "verificaciones": 5,
+      "aprobadas": 5,
+      "ok": true
+    },
+    {
+      "prueba": 10,
+      "verificaciones": 3,
+      "aprobadas": 3,
+      "ok": true
+    },
+    {
+      "prueba": 11,
+      "verificaciones": 7,
+      "aprobadas": 7,
+      "ok": true
+    },
+    {
+      "prueba": 12,
+      "verificaciones": 19,
+      "aprobadas": 19,
+      "ok": true
+    },
+    {
+      "prueba": 13,
+      "verificaciones": 8,
+      "aprobadas": 8,
+      "ok": true
+    },
+    {
+      "prueba": 14,
+      "verificaciones": 8,
+      "aprobadas": 8,
+      "ok": true
+    },
+    {
+      "prueba": 15,
+      "verificaciones": 2,
+      "aprobadas": 2,
+      "ok": true
+    }
+  ],
+  "verificaciones": [
+    {
+      "prueba": 1,
+      "descripcion": "El administrador técnico actualiza los datos de la institución",
+      "ok": true,
+      "detalle": "{\"ok\":true}"
+    },
+    {
+      "prueba": 1,
+      "descripcion": "El administrador registra un nuevo servicio",
+      "ok": true,
+      "detalle": "{\"ok\":true}"
+    },
+    {
+      "prueba": 1,
+      "descripcion": "Talento Humano NO puede cambiar la configuración técnica (403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 1,
+      "descripcion": "El administrador crea un usuario con rol y contraseña temporal",
+      "ok": true,
+      "detalle": "{\"id\":\"a2f7608d-8a8f-4d8a-9fcd-84c47cc23645\"}"
+    },
+    {
+      "prueba": 1,
+      "descripcion": "El usuario nuevo queda obligado a cambiar la contraseña",
+      "ok": true,
+      "detalle": "{\"ok\":true,\"role\":\"LIDER_SERVICIO\",\"mustChangePassword\":true}"
+    },
+    {
+      "prueba": 2,
+      "descripcion": "Talento Humano crea una campaña anónima de identificación de necesidades",
+      "ok": true,
+      "detalle": "{\"id\":\"57bddf64-312d-4354-a250-f16c0ffc133b\",\"slug\":\"mgmwcqrb\",\"link\":\"http://localhost:3100/c/mgmwcqrb\"}"
+    },
+    {
+      "prueba": 2,
+      "descripcion": "La campaña se activa para recibir respuestas",
+      "ok": true,
+      "detalle": "{\"id\":\"57bddf64-312d-4354-a250-f16c0ffc133b\"}"
+    },
+    {
+      "prueba": 2,
+      "descripcion": "Un líder de servicio NO puede crear campañas (403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 3,
+      "descripcion": "Se genera un enlace con identificador aleatorio",
+      "ok": true,
+      "detalle": "http://localhost:3100/c/mgmwcqrb"
+    },
+    {
+      "prueba": 3,
+      "descripcion": "El enlace abre la campaña sin iniciar sesión",
+      "ok": true,
+      "detalle": "200"
+    },
+    {
+      "prueba": 3,
+      "descripcion": "El panel muestra el enlace y el código QR",
+      "ok": true,
+      "detalle": "200"
+    },
+    {
+      "prueba": 4,
+      "descripcion": "El formulario se completa en un celular hasta recibir código de seguimiento",
+      "ok": true,
+      "detalle": "T360-HAER-4RAJ"
+    },
+    {
+      "prueba": 4,
+      "descripcion": "La página no tiene desplazamiento horizontal en 390 px",
+      "ok": true
+    },
+    {
+      "prueba": 12,
+      "descripcion": "Una campaña confidencial rechaza participación sin sesión (401)",
+      "ok": true,
+      "detalle": "401"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "El colaborador participa en una campaña confidencial",
+      "ok": true,
+      "detalle": "{\"trackingCode\":\"T360-TWCG-BSBA\",\"needCodes\":[\"NEC-2026-0016\"],\"mode\":\"CONFIDENCIAL\"}"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "El sistema impide participar dos veces en la misma campaña confidencial (409)",
+      "ok": true,
+      "detalle": "409"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "El servidor valida preguntas obligatorias aunque el navegador se salte la validación (400)",
+      "ok": true,
+      "detalle": "{\"error\":\"Falta responder: «¿En qué tipo de área trabajas?»\"}"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "La necesidad enviada desde el celular aparece en la bandeja de Talento Humano",
+      "ok": true,
+      "detalle": "2"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "Quedó almacenada en PostgreSQL",
+      "ok": true,
+      "detalle": "1"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "Anonimato real: sin usuario, sin reportante y con hora truncada a medianoche (Colombia)",
+      "ok": true,
+      "detalle": "{\"user_id\":null,\"submitted_on\":\"2026-10-08\",\"reporter_id\":null,\"received_at\":\"2026-10-08T05:00:00.000Z\",\"is_anonymous\":true}"
+    },
+    {
+      "prueba": 5,
+      "descripcion": "La auditoría de la participación anónima no guarda actor",
+      "ok": true,
+      "detalle": "[{\"actor_id\":null}]"
+    },
+    {
+      "prueba": 6,
+      "descripcion": "El sistema rechaza transiciones fuera de orden (evaluar una necesidad recién recibida → 409)",
+      "ok": true,
+      "detalle": "{\"error\":\"No se puede «evaluar efectividad de» una necesidad en estado «Recibida».\"}"
+    },
+    {
+      "prueba": 6,
+      "descripcion": "Talento Humano clasifica la necesidad y la relaciona con el criterio TH1 7",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"CLASIFICADA\"}"
+    },
+    {
+      "prueba": 6,
+      "descripcion": "Se registra el análisis",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"EN_ANALISIS\"}"
+    },
+    {
+      "prueba": 6,
+      "descripcion": "Calidad prioriza con la matriz ponderada y queda registrada la metodología",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"PRIORIZADA\"}"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "Antes de la asignación el líder NO ve la necesidad (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "Talento Humano asigna responsable y fecha de compromiso",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"ASIGNADA\"}"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "El líder ve la necesidad en «Necesidades a mi cargo»",
+      "ok": true,
+      "detalle": "2"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "El responsable inicia la ejecución",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"EN_EJECUCION\"}"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "El responsable NO puede cerrar administrativamente (403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 8,
+      "descripcion": "Se registra una acción con fecha, responsable y medio de verificación",
+      "ok": true,
+      "detalle": "{\"id\":\"cf8fe3fc-55e1-45dc-ab91-24fc6fa56617\"}"
+    },
+    {
+      "prueba": 8,
+      "descripcion": "No se acepta una acción sin medio de verificación (400)",
+      "ok": true,
+      "detalle": "400"
+    },
+    {
+      "prueba": 8,
+      "descripcion": "No se puede completar una acción sin evidencia (400)",
+      "ok": true,
+      "detalle": "{\"error\":\"Para completar la acción registre la evidencia según el medio de verificación.\"}"
+    },
+    {
+      "prueba": 8,
+      "descripcion": "El responsable completa la acción registrando la evidencia",
+      "ok": true,
+      "detalle": "{\"id\":\"cf8fe3fc-55e1-45dc-ab91-24fc6fa56617\",\"status\":\"COMPLETADA\"}"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "El responsable emite la respuesta al trabajador",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"RESPUESTA_EMITIDA\"}"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "El trabajador consulta su caso con el código y ve la respuesta (sin notas internas)",
+      "ok": true,
+      "detalle": "{\"campaign\":\"Necesidades E2E-muzywfuq\",\"submittedOn\":\"2026-10-08\",\"needs\":[{\"code\":\"NEC-2026-0015\",\"title\":\"Prueba E2E-muzywfuq: falta un tensiómetro adicional en el turno de la noche para el área de observación\",\"category\":\"Condiciones para realizar el trabajo\",\"status\":\"Ya tiene respuesta\",\"closed"
+    },
+    {
+      "prueba": 7,
+      "descripcion": "Un código inexistente no revela información (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 10,
+      "descripcion": "«Necesidades con respuesta» aumenta en 1 tras emitir la respuesta",
+      "ok": true,
+      "detalle": "{\"antes\":\"5/15\",\"despues\":\"6/15\"}"
+    },
+    {
+      "prueba": 10,
+      "descripcion": "La participación cuenta la nueva participación del periodo",
+      "ok": true,
+      "detalle": "28"
+    },
+    {
+      "prueba": 10,
+      "descripcion": "Cada indicador expone numerador, denominador y meta",
+      "ok": true
+    },
+    {
+      "prueba": 14,
+      "descripcion": "La necesidad pasa a «Pendiente de verificar efectividad»",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"PENDIENTE_EFECTIVIDAD\"}"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "Calidad registra evaluación EFECTIVA y el caso se cierra con efectividad verificada",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"CERRADA\"}"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "Otra necesidad se cierra administrativamente",
+      "ok": true,
+      "detalle": "{\"id\":\"5b3cdbeb-2c40-4a5e-aa20-9666867d7a18\",\"status\":\"CERRADA\"}"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "Los tipos de cierre quedan diferenciados (EFECTIVIDAD_VERIFICADA vs ADMINISTRATIVO)",
+      "ok": true,
+      "detalle": "[{\"id\":\"5b3cdbeb-2c40-4a5e-aa20-9666867d7a18\",\"close_type\":\"ADMINISTRATIVO\",\"reviews\":0},{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"close_type\":\"EFECTIVIDAD_VERIFICADA\",\"reviews\":1}]"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "El indicador de efectividad cuenta la evaluación y no el cierre administrativo",
+      "ok": true,
+      "detalle": "{\"antes\":{\"key\":\"efectividad\",\"name\":\"Efectividad de intervenciones\",\"numerator\":2,\"denominator\":3,\"value\":66.7,\"display\":\"66,7 %\",\"target\":80,\"status\":\"warn\"},\"despues\":{\"key\":\"efectividad\",\"name\":\"Efectividad de intervenciones\",\"numerator\":3,\"denominator\":4,\"value\":75,\"display\":\"75 %\",\"target\":80,"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "No se puede publicar como mejora un cierre administrativo (409)",
+      "ok": true,
+      "detalle": "409"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "Sí se publica la mejora con efectividad verificada",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"CERRADA\"}"
+    },
+    {
+      "prueba": 14,
+      "descripcion": "La mejora aparece en «Tú lo propusiste, el hospital lo hizo»",
+      "ok": true,
+      "detalle": "200"
+    },
+    {
+      "prueba": 9,
+      "descripcion": "El historial conserva cada paso del ciclo en orden",
+      "ok": true,
+      "detalle": "[\"CREADA\",\"CLASSIFY\",\"ANALYZE\",\"PRIORITIZE\",\"ASSIGN\",\"START\",\"ACCION_REGISTRADA\",\"ACCION_ACTUALIZADA\",\"RESPOND\",\"TOVERIFICATION\",\"EVALUACION_EFECTIVIDAD\",\"PUBLISH\"]"
+    },
+    {
+      "prueba": 9,
+      "descripcion": "Cada paso registra quién lo hizo",
+      "ok": true,
+      "detalle": "null"
+    },
+    {
+      "prueba": 9,
+      "descripcion": "La priorización registra método y aprobador",
+      "ok": true,
+      "detalle": "Matriz ponderada v1 [seguridadPaciente:25,trabajador:20,riesgoLegal:15,frecuencia:10,magnitud:10,urgencia:10,factibilidad:10] (pesos sin aprobar)"
+    },
+    {
+      "prueba": 9,
+      "descripcion": "La auditoría registra las acciones del personal",
+      "ok": true,
+      "detalle": "28"
+    },
+    {
+      "prueba": 9,
+      "descripcion": "Una necesidad cerrada puede reabrirse con motivo, sin perder su historial",
+      "ok": true,
+      "detalle": "{\"id\":\"51294bf3-10de-451e-be70-d7357a09d7cb\",\"status\":\"REABIERTA\"}"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "Talento Humano exporta a Excel",
+      "ok": true,
+      "detalle": "200"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "El archivo incluye las hojas Necesidades, Acciones e Indicadores",
+      "ok": true,
+      "detalle": "[\"Información\",\"Necesidades\",\"Acciones\",\"Indicadores\"]"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "El archivo contiene la necesidad confidencial pero NO el nombre ni el correo de quien la reportó",
+      "ok": true,
+      "detalle": "null"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "El archivo no contiene códigos de seguimiento",
+      "ok": true,
+      "detalle": "null"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "Un líder de servicio no puede exportar (403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "Calidad ve la necesidad confidencial sin la identidad de quien reporta",
+      "ok": true,
+      "detalle": "null"
+    },
+    {
+      "prueba": 11,
+      "descripcion": "Talento Humano sí ve la identidad en la campaña confidencial (y queda auditado)",
+      "ok": true,
+      "detalle": "{\"id\":\"e17798e7-ed83-469b-baa3-b2611e63a990\",\"name\":\"Colaborador de prueba (demo)\",\"email\":\"colaborador@demo.t360\"}"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "anónimo: GET /api/needs → 401",
+      "ok": true,
+      "detalle": "401"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "anónimo: GET /api/dashboard → 401",
+      "ok": true,
+      "detalle": "401"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "anónimo: GET /api/needs/:id → 401",
+      "ok": true,
+      "detalle": "401"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "colaborador: GET /api/needs → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "colaborador: GET /api/dashboard → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "admin: GET /api/needs → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "admin: GET /api/needs/:id → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "admin: GET /api/export/needs → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "auditor: POST /api/needs/:id/operations → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "lider: GET /api/needs/:id → 404",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "lider: GET /api/users → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "talento: GET /api/users → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "talento: GET /api/audit → 403",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "Sin sesión, /panel redirige al ingreso",
+      "ok": true,
+      "detalle": "/ingresar?siguiente=/panel"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "El colaborador que intenta abrir el panel por URL es redirigido a «Mi espacio»",
+      "ok": true,
+      "detalle": "/mi-espacio"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "El líder que abre por URL una necesidad que no le corresponde recibe «no encontrada»",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "El administrador técnico que abre la bandeja por URL es redirigido a «sin permiso»",
+      "ok": true,
+      "detalle": "/panel/sin-permiso"
+    },
+    {
+      "prueba": 12,
+      "descripcion": "Una petición desde otro origen es rechazada (protección CSRF, 403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "Talento Humano de la institución B no puede leer una necesidad de A (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "La bandeja de B solo contiene registros de B",
+      "ok": true,
+      "detalle": "[\"Necesidad privada de la institución B\"]"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "B no puede modificar necesidades de A (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "B no puede modificar acciones de A (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "B no puede ver resultados de campañas de A (404)",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "B no puede crear acciones sobre necesidades de A",
+      "ok": true,
+      "detalle": "404"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "El tablero de B no incluye datos de A",
+      "ok": true,
+      "detalle": "{\"received\":1,\"open\":1,\"urgentOpen\":0,\"overdueActions\":0,\"openActions\":0,\"medianResponseDays\":null,\"participations\":0}"
+    },
+    {
+      "prueba": 13,
+      "descripcion": "Un usuario de B no puede participar en una campaña confidencial de A (403)",
+      "ok": true,
+      "detalle": "403"
+    },
+    {
+      "prueba": 15,
+      "descripcion": "Tras cerrar sesión, la API exige autenticación de nuevo (401)",
+      "ok": true,
+      "detalle": "401"
+    },
+    {
+      "prueba": 15,
+      "descripcion": "Al volver a ingresar, la necesidad conserva estado, historial y acciones",
+      "ok": true,
+      "detalle": "{\"status\":\"REABIERTA\",\"eventos\":13}"
+    }
+  ]
+}

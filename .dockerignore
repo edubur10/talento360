@@ -1,0 +1,9 @@
+node_modules
+.next
+.env
+.env.*
+backups
+tests/e2e/capturas
+tests/e2e/*.png
+.git
+*.log
