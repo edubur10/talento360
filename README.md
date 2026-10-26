@@ -84,3 +84,4 @@ docs/             manuales y entregables D–J
 ## Advertencia normativa
 
 La redacción de los 15 criterios del TH1 proviene del documento de requerimientos y **no fue cotejada contra el texto oficial** del Manual (el PDF oficial no estuvo disponible en formato legible durante el desarrollo). Calidad debe verificarla antes de usar el sistema como soporte ante evaluadores (`src/lib/th1.ts`). El sistema **no asigna calificaciones de acreditación** y su instalación por sí sola no demuestra cumplimiento.
+# talento360
