@@ -1,4 +1,8 @@
-# ═══ Talento 360° Salud — despliegue en Portainer (Puerto 8081) ═══
+# ═══ Talento 360° Salud — despliegue en un servidor (VPS) ═══
+# Servicios: base de datos, migraciones, aplicación, proxy HTTPS (Caddy) y respaldos diarios.
+# Uso:  cp .env.example .env  →  editar .env  →  docker compose up -d --build
+# Ver docs/01-MANUAL-TECNICO.md
+
 services:
   db:
     image: postgres:16-alpine
@@ -6,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: t360
       POSTGRES_USER: t360
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -14,18 +18,19 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    # La base NO se expone a internet: solo la ven los demás servicios.
 
   migrate:
     build: { context: ., target: tools }
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
-      SEED_MODE: "produccion"
-      SEED_INSTITUTION_NAME: "ESE Hospital Pío XII"
-      SEED_INSTITUTION_SLUG: "pio-xii"
-      SEED_INSTITUTION_CITY: "Colón, Putumayo"
-      SEED_ADMIN_EMAIL: "admin@hospital.gov.co"
-      SEED_ADMIN_PASSWORD: "PasswordTemporal123*"
-      DEFAULT_INSTITUTION_SLUG: "pio-xii"
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
+      # Solo se usan al ejecutar la carga inicial: docker compose run --rm migrate npx tsx scripts/seed.ts
+      SEED_MODE: ${SEED_MODE:-produccion}
+      SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
+      SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-}
+      SEED_INSTITUTION_CITY: ${SEED_INSTITUTION_CITY:-}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
     depends_on:
       db: { condition: service_healthy }
     restart: "no"
@@ -33,15 +38,26 @@ services:
   app:
     build: { context: ., target: runner }
     restart: unless-stopped
-    ports:
-      - "3002:3000"
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
-      APP_URL: ${APP_URL:-http://192.168.220.33:3002}
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
+      APP_URL: https://${DOMAIN:?Defina DOMAIN en .env}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
       migrate: { condition: service_completed_successfully }
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "3002:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
 
   backup:
     image: postgres:16-alpine
@@ -49,7 +65,7 @@ services:
     environment:
       PGHOST: db
       PGUSER: t360
-      PGPASSWORD: ${POSTGRES_PASSWORD:-admin}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
       PGDATABASE: t360
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-30}
     volumes:
@@ -61,3 +77,5 @@ services:
 
 volumes:
   pgdata:
+  caddy_data:
+  caddy_config:
