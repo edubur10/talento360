@@ -23,7 +23,7 @@ services:
   migrate:
     build: { context: ., target: tools }
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
+      DATABASE_URL: postgresql://t360:admin@db:5432/t360?schema=public
       # Solo se usan al ejecutar la carga inicial: docker compose run --rm migrate npx tsx scripts/seed.ts
       SEED_MODE: ${SEED_MODE:-produccion}
       SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
@@ -39,8 +39,8 @@ services:
     build: { context: ., target: runner }
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
-      APP_URL: https://${DOMAIN:?Defina DOMAIN en .env}
+      DATABASE_URL: postgresql://t360:admin@db:5432/t360?schema=public
+      APP_URL: https://${192.168.220.33:3002}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
