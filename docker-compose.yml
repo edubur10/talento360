@@ -34,10 +34,10 @@ services:
     build: { context: ., target: runner }
     restart: unless-stopped
     ports:
-      - "8081:3002"
+      - "3002:443"
     environment:
       DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD:-admin}@db:5432/t360
-      APP_URL: ${APP_URL:-http://192.168.220.33:8081}
+      APP_URL: ${APP_URL:-http://192.168.220.33:3002}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
