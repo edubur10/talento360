@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://t360:admin@db:5432/t360?schema=public
-      APP_URL: https://${192.168.220.33:3002}
+      APP_URL: https://${192.168.220.33}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
