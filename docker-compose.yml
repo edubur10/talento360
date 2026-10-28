@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: t360
       POSTGRES_USER: t360
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
