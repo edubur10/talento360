@@ -1,21 +1,24 @@
-# Proxy inverso con HTTPS automático (Let's Encrypt).
-# Privacidad: NO se registran en el log las rutas de participación pública
-# (formularios, envío de respuestas y consulta de seguimiento), para que la
-# participación anónima no quede asociada a una IP ni a una hora.
-{$DOMAIN} {
-	encode zstd gzip
 
-	@publico path /c/* /api/public/* /seguimiento
-	log_skip @publico
-	log {
-		output stdout
-		format json
-	}
+# Proxy inverso para Talento 360 Salud
+# Acceso mediante IP privada y certificado interno.
 
-	header {
-		Strict-Transport-Security "max-age=31536000; includeSubDomains"
-		-Server
-	}
+http://{$DOMAIN} {
+    tls internal
 
-	reverse_proxy app:3000
+    encode zstd gzip
+
+    @publico path /c/* /api/public/* /seguimiento
+    log_skip @publico
+
+    log {
+        output stdout
+        format json
+    }
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        -Server
+    }
+
+    reverse_proxy app:3000
 }

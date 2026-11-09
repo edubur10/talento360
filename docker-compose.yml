@@ -6,6 +6,7 @@ services:
       POSTGRES_DB: t360
       POSTGRES_USER: t360
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      DATABASE_URL: ${DATABASE_URL}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -19,13 +20,15 @@ services:
       context: .
       target: tools
     environment:
-      DATABASE_URL: "postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360?schema=public"
+      DATABASE_URL: ${DATABASE_URL}
+      APP_URL: ${APP_URL}
       SEED_MODE: ${SEED_MODE:-produccion}
       SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
-      SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-}
+      DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SEED_INSTITUTION_CITY: ${SEED_INSTITUTION_CITY:-}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      SESSION_HOURS: ${SESSION_HOURS:-10}
     depends_on:
       db:
         condition: service_healthy
@@ -47,17 +50,17 @@ services:
 
   caddy:
     image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "3002:443"
-    environment:
-      DOMAIN: ${DOMAIN}
-    volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - app
+  restart: unless-stopped
+  ports:
+    - "3002:443"
+  environment:
+    DOMAIN: ${DOMAIN}
+  volumes:
+    - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+    - caddy_data:/data
+    - caddy_config:/config
+  depends_on:
+    - app
 
   backup:
     image: postgres:16-alpine
