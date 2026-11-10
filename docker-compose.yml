@@ -16,9 +16,11 @@ services:
       retries: 20
 
   migrate:
-    build: { context: ., target: tools }
+    build:
+      context: .
+      target: tools
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360?schema=public
       SEED_MODE: ${SEED_MODE:-produccion}
       SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
       SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-}
@@ -26,19 +28,26 @@ services:
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
     depends_on:
-      db: { condition: service_healthy }
-    restart: "no"
+      db:
+        condition: service_healthy
+    restart: "on-failure"
 
   app:
-    build: { context: ., target: runner }
+    build:
+      context: .
+      target: runner
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360
-      APP_URL: http://${DOMAIN:?Defina DOMAIN en .env}:3002
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360?schema=public
+      APP_URL: ${APP_URL:?Defina APP_URL en .env}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
+      HOSTNAME: "0.0.0.0"
     depends_on:
-      migrate: { condition: service_completed_successfully }
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      disable: true
 
   caddy:
     image: caddy:2-alpine
@@ -51,7 +60,8 @@ services:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-    depends_on: [app]
+    depends_on:
+      - app
 
   backup:
     image: postgres:16-alpine
@@ -67,7 +77,8 @@ services:
       - ./deploy/backup-loop.sh:/backup-loop.sh:ro
     entrypoint: ["/bin/sh", "/backup-loop.sh"]
     depends_on:
-      db: { condition: service_healthy }
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:
