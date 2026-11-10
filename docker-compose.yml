@@ -51,10 +51,10 @@ services:
     restart: unless-stopped
     ports:
       - "3002:443"
-    environment:
-      DOMAIN: ${DOMAIN:?Defina DOMAIN}
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
     volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -81,3 +81,28 @@ volumes:
   pgdata:
   caddy_data:
   caddy_config:
+  configs:
+  caddyfile:
+    content: |
+      {
+          default_sni ${DOMAIN}
+      }
+
+      ${DOMAIN} {
+          tls internal
+          encode zstd gzip
+
+          @publico path /c/* /api/public/* /seguimiento*
+          log_skip @publico
+
+          log {
+              output stdout
+              format json
+          }
+
+          header {
+              -Server
+          }
+
+          reverse_proxy app:3000
+      }
