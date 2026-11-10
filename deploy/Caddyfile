@@ -2,8 +2,7 @@
     admin off
 }
 
-# Proxy inverso para Talento 360 Salud en HTTP plano
-{$DOMAIN}:3002 {
+:3002 {
     encode zstd gzip
 
     @publico path /c/* /api/public/* /seguimiento*
