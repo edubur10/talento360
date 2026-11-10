@@ -50,7 +50,7 @@ services:
     image: caddy:2-alpine
     restart: unless-stopped
     ports:
-      - "3002:3002"
+      - "3002:443"
     environment:
       - DOMAIN=${DOMAIN}
     configs:
