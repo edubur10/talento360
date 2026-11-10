@@ -30,7 +30,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: "on-failure"
+    restart: "no"
 
   app:
     build:
@@ -54,10 +54,10 @@ services:
     restart: unless-stopped
     ports:
       - "3002:3002"
-    environment:
-      DOMAIN: ${DOMAIN}
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
     volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -73,12 +73,37 @@ services:
       PGDATABASE: t360
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-30}
     volumes:
-      - ./backups:/backups
+      - /srv/t360/backups:/backups
       - ./deploy/backup-loop.sh:/backup-loop.sh:ro
     entrypoint: ["/bin/sh", "/backup-loop.sh"]
     depends_on:
       db:
         condition: service_healthy
+
+configs:
+  caddyfile:
+    content: |
+      {
+          admin off
+      }
+
+      :3002 {
+          encode zstd gzip
+
+          @publico path /c/* /api/public/* /seguimiento*
+          log_skip @publico
+
+          log {
+              output stdout
+              format json
+          }
+
+          header {
+              -Server
+          }
+
+          reverse_proxy app:3000
+      }
 
 volumes:
   pgdata:
