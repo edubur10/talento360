@@ -2,7 +2,7 @@
 # Proxy inverso para Talento 360 Salud
 # Acceso mediante IP privada y certificado interno.
 
-http://{$DOMAIN} {
+https://{$DOMAIN} {
     tls internal
 
     encode zstd gzip
