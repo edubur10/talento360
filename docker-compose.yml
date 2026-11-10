@@ -53,7 +53,7 @@ services:
     image: caddy:2-alpine
     restart: unless-stopped
     ports:
-      - "3002:443"
+      - "3002:3002"
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
@@ -85,11 +85,9 @@ configs:
     content: |
       {
           admin off
-          default_sni 192.168.220.33
       }
 
-      192.168.220.33 {
-          tls internal
+      :3002 {
           encode zstd gzip
 
           @publico path /c/* /api/public/* /seguimiento*
