@@ -51,6 +51,8 @@ services:
     restart: unless-stopped
     ports:
       - "3002:443"
+    environment:
+      - DOMAIN=${DOMAIN}
     configs:
       - source: caddyfile
         target: /etc/caddy/Caddyfile
