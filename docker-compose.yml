@@ -29,7 +29,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: "no"
+    restart: "on-failure"
 
   app:
     build:
