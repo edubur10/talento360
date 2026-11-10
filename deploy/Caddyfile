@@ -2,9 +2,7 @@
 # Proxy inverso para Talento 360 Salud
 # Acceso mediante IP privada y certificado interno.
 
-https://{$DOMAIN} {
-    tls internal
-
+:443 {
     encode zstd gzip
 
     @publico path /c/* /api/public/* /seguimiento
@@ -16,7 +14,6 @@ https://{$DOMAIN} {
     }
 
     header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains"
         -Server
     }
 
