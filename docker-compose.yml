@@ -19,7 +19,7 @@ services:
       context: .
       target: tools
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360?schema=public
       SEED_MODE: ${SEED_MODE:-produccion}
       SEED_INSTITUTION_NAME: ${SEED_INSTITUTION_NAME:-}
       SEED_INSTITUTION_SLUG: ${SEED_INSTITUTION_SLUG:-}
@@ -37,10 +37,11 @@ services:
       target: runner
     restart: unless-stopped
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      APP_URL: ${APP_URL}
+      DATABASE_URL: postgresql://t360:${POSTGRES_PASSWORD}@db:5432/t360?schema=public
+      APP_URL: ${APP_URL:?Defina APP_URL}
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
+      HOSTNAME: "0.0.0.0"
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -51,9 +52,11 @@ services:
     ports:
       - "3002:443"
     environment:
-      DOMAIN: ${DOMAIN}
+      DOMAIN: ${DOMAIN:?Defina DOMAIN}
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - app
 

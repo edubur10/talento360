@@ -1,11 +1,15 @@
+{
+    default_sni {$DOMAIN}
+}
 
 # Proxy inverso para Talento 360 Salud
 # Acceso mediante IP privada y certificado interno.
 
-:443 {
+{$DOMAIN} {
+    tls internal
     encode zstd gzip
 
-    @publico path /c/* /api/public/* /seguimiento
+    @publico path /c/* /api/public/* /seguimiento*
     log_skip @publico
 
     log {
