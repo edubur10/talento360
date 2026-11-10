@@ -77,16 +77,15 @@ services:
       db:
         condition: service_healthy
 
-volumes:
-  pgdata:
-  caddy_data:
-  caddy_config:
-  configs:
+configs:
   caddyfile:
     content: |
       {
-          default_sni ${DOMAIN}
+          default_sni ${DOMAIN:?Defina DOMAIN}
       }
+
+      # Proxy inverso para Talento 360 Salud
+      # Acceso mediante IP privada y certificado interno.
 
       ${DOMAIN} {
           tls internal
@@ -106,3 +105,8 @@ volumes:
 
           reverse_proxy app:3000
       }
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
