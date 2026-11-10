@@ -45,12 +45,24 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
     ports:
-      - "3002:443"
+      - "3002:3002"
     environment:
       - DOMAIN=${DOMAIN}
     configs:
@@ -83,14 +95,11 @@ configs:
   caddyfile:
     content: |
       {
-          default_sni ${DOMAIN:?Defina DOMAIN}
+          admin off
       }
 
-      # Proxy inverso para Talento 360 Salud
-      # Acceso mediante IP privada y certificado interno.
-
-      ${DOMAIN} {
-          tls internal
+      # Proxy inverso para Talento 360 Salud (HTTP)
+      {$DOMAIN}:3002 {
           encode zstd gzip
 
           @publico path /c/* /api/public/* /seguimiento*
