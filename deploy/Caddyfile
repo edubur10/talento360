@@ -1,21 +1,23 @@
-{
-    admin off
-}
+   {
+       admin off
+       default_sni 192.168.220.33
+   }
 
-:3002 {
-    encode zstd gzip
+   192.168.220.33 {
+       tls internal
+       encode zstd gzip
 
-    @publico path /c/* /api/public/* /seguimiento*
-    log_skip @publico
+       @publico path /c/* /api/public/* /seguimiento*
+       log_skip @publico
 
-    log {
-        output stdout
-        format json
-    }
+       log {
+           output stdout
+           format json
+       }
 
-    header {
-        -Server
-    }
+       header {
+           -Server
+       }
 
-    reverse_proxy app:3000
-}
+       reverse_proxy app:3000
+   }
