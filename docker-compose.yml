@@ -43,6 +43,7 @@ services:
       DEFAULT_INSTITUTION_SLUG: ${DEFAULT_INSTITUTION_SLUG:-pio-xii}
       SESSION_HOURS: ${SESSION_HOURS:-10}
       HOSTNAME: "0.0.0.0"
+      ALLOW_INSECURE_COOKIES: "1" # necesario mientras se acceda por HTTP
     depends_on:
       migrate:
         condition: service_completed_successfully
