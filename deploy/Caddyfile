@@ -17,5 +17,7 @@
         -Server
     }
 
-    reverse_proxy app:3000
+    reverse_proxy app:3000 {
+        header_down Set-Cookie "(?i); *secure" ""
+    }
 }
